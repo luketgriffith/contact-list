@@ -17,7 +17,7 @@ _jquery2['default'].ajaxSetup({
   }
 });
 
-},{"jquery":11}],2:[function(require,module,exports){
+},{"jquery":12}],2:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -44,7 +44,7 @@ var appElement = (0, _jquery2['default'])('.app');
 var router = new _router2['default'](appElement);
 router.start();
 
-},{"./ajax_setup":1,"./router":5,"jquery":11,"moment":12,"underscore":13}],3:[function(require,module,exports){
+},{"./ajax_setup":1,"./router":5,"jquery":12,"moment":13,"underscore":14}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -71,7 +71,7 @@ var personCollection = _backbone2['default'].Collection.extend({
 exports['default'] = personCollection;
 module.exports = exports['default'];
 
-},{"./person_model":4,"backbone":10}],4:[function(require,module,exports){
+},{"./person_model":4,"backbone":11}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -95,7 +95,7 @@ var personModel = _Backbone2['default'].Model.extend({
 exports['default'] = personModel;
 module.exports = exports['default'];
 
-},{"Backbone":9}],5:[function(require,module,exports){
+},{"Backbone":10}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -133,6 +133,10 @@ var _viewsAdd_person2 = _interopRequireDefault(_viewsAdd_person);
 var _person_model = require('./person_model');
 
 var _person_model2 = _interopRequireDefault(_person_model);
+
+var _viewsEdit_person = require('./views/edit_person');
+
+var _viewsEdit_person2 = _interopRequireDefault(_viewsEdit_person);
 
 var Router = _backbone2['default'].Router.extend({
   routes: {
@@ -191,6 +195,18 @@ var Router = _backbone2['default'].Router.extend({
         });
       })();
     }
+    (0, _jquery2['default'])('#edit').on('click', function () {
+      var editPerson = function editPerson() {
+        var firstName = (0, _jquery2['default'])('#firstName').val();
+        var lastName = (0, _jquery2['default'])('#lastName').val();
+        var phone = (0, _jquery2['default'])('#phone').val();
+        var email = (0, _jquery2['default'])('#email').val();
+        (0, _jquery2['default'])('.app').append((0, _viewsEdit_person2['default'])(firstName, lastName, phone, email));
+      };
+
+      // var image= $('#image').val();
+      editPerson();
+    });
   },
   addPerson: function addPerson() {
     var _this2 = this;
@@ -219,6 +235,7 @@ var Router = _backbone2['default'].Router.extend({
       location.reload(true);
     });
   },
+
   start: function start() {
     _backbone2['default'].history.start(); //Backbone.history watches the URL chain to see if it changes. start starts it
   }
@@ -228,7 +245,7 @@ var Router = _backbone2['default'].Router.extend({
 exports['default'] = Router;
 module.exports = exports['default'];
 
-},{"./person_collection":3,"./person_model":4,"./views/add_person":6,"./views/home":7,"./views/person":8,"backbone":10,"jquery":11}],6:[function(require,module,exports){
+},{"./person_collection":3,"./person_model":4,"./views/add_person":6,"./views/edit_person":7,"./views/home":8,"./views/person":9,"backbone":11,"jquery":12}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -246,7 +263,26 @@ var addTemplate = '<div>\n  <input type = \'text\' placeholder=\'First Name\' id
 exports['default'] = addTemplate;
 module.exports = exports['default'];
 
-},{"backbone":10}],7:[function(require,module,exports){
+},{"backbone":11}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _backbone = require('backbone');
+
+var _backbone2 = _interopRequireDefault(_backbone);
+
+var editTemplate = function editTemplate(firstName, lastName, phone, email) {
+  return '<div>\n  <input type = \'text\' value=firstName id=\'addFirstName\'>\n  <input type = \'text\' value=lastName id=\'addLastName\'> \n  <input type = \'number\' value=phone id= \'addPhone\'>\n  <input type = \'email\' value = email id= \'addEmail\'>\n  // <input type = \'text\' value = \'image\' id = \'addPic\'>\n  <button id="save">Save</button>\n  </div>';
+};
+exports['default'] = editTemplate;
+module.exports = exports['default'];
+
+},{"backbone":11}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -272,7 +308,7 @@ exports['default'] = contactsTemplate;
 exports['default'] = contacts;
 module.exports = exports['default'];
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -287,7 +323,7 @@ var _underscore2 = _interopRequireDefault(_underscore);
 
 function processData(data) {
 
-  return '<div class=\'contact\'>\n          <h2>' + data.firstName + ' ' + data.lastName + '</h2>\n          <img src=\'' + data.image + '\'>\n          <h3>Phone: ' + data.phone + '</h3>\n          <h3>Email: ' + data.email + '</h3>\n          </div>\n  ';
+  return '<div class=\'contact\'>\n          <h2 id=\'firstName\'>' + data.firstName + '</h2>\n          <h2 id=\'lastName\'> ' + data.lastName + '</h2>\n          <img src=\'' + data.image + '\' id=\'image\'>\n          <h3 id =\'phone\'>Phone: ' + data.phone + '</h3>\n          <h3 id= \'email\'>Email: ' + data.email + '</h3>\n          <button id="edit">Edit</button>\n          </div> \n  ';
 }
 
 function personTemplate(data) {
@@ -297,7 +333,7 @@ function personTemplate(data) {
 exports['default'] = personTemplate;
 module.exports = exports['default'];
 
-},{"underscore":13}],9:[function(require,module,exports){
+},{"underscore":14}],10:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.3
 
@@ -2196,7 +2232,7 @@ module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"jquery":11,"underscore":13}],10:[function(require,module,exports){
+},{"jquery":12,"underscore":14}],11:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.3
 
@@ -4095,7 +4131,7 @@ module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"jquery":11,"underscore":13}],11:[function(require,module,exports){
+},{"jquery":12,"underscore":14}],12:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -13307,7 +13343,7 @@ return jQuery;
 
 }));
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.6
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -16503,7 +16539,7 @@ return jQuery;
     return _moment;
 
 }));
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors

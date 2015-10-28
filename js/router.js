@@ -6,11 +6,12 @@ import personTemplate from './views/person';
 import $ from 'jquery';
 import addTemplate from './views/add_person';
 import personModel from './person_model'
+import editTemplate from './views/edit_person'
 let Router = Backbone.Router.extend({
   routes: {
     "": "home",  
     "person1": "person1page",
-    "add": "addPerson"
+    "add": "addPerson",
     },
 
 
@@ -36,7 +37,8 @@ let Router = Backbone.Router.extend({
           $('#add').remove();
           router.navigate(`/add`);
           router.addPerson();
-        })
+    });
+       
   },
 
   home: function  () {
@@ -63,7 +65,19 @@ let Router = Backbone.Router.extend({
       dude.fetch().then(function() {
         router.$el.html( personTemplate(dude.toJSON()) );
       });
-    }    
+    }   
+     $('#edit').on('click', function(){
+      let editPerson = function(){
+      var firstName = $('#firstName').val();
+      var lastName = $('#lastName').val();
+      var phone = $('#phone').val();
+      var email = $('#email').val();
+      $('.app').append(editTemplate(firstName, lastName, phone, email));
+      };
+
+      // var image= $('#image').val();
+      editPerson();
+     });  
     
   },
   addPerson: function(){
@@ -91,6 +105,9 @@ let Router = Backbone.Router.extend({
     location.reload(true);
     })
   },
+
+  
+
   start: function(){
     Backbone.history.start();   //Backbone.history watches the URL chain to see if it changes. start starts it
   }
