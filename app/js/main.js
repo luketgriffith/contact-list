@@ -196,16 +196,33 @@ var Router = _backbone2['default'].Router.extend({
       })();
     }
     (0, _jquery2['default'])('#edit').on('click', function () {
-      var editPerson = function editPerson() {
-        var firstName = (0, _jquery2['default'])('#firstName').val();
-        var lastName = (0, _jquery2['default'])('#lastName').val();
-        var phone = (0, _jquery2['default'])('#phone').val();
-        var email = (0, _jquery2['default'])('#email').val();
-        (0, _jquery2['default'])('.app').append((0, _viewsEdit_person2['default'])(firstName, lastName, phone, email));
-      };
+      (0, _jquery2['default'])('.app').append(_viewsEdit_person2['default']);
+      var dude = _this.people.get(nameId);
+      var man = _this.people;
 
-      // var image= $('#image').val();
-      editPerson();
+      var firstName = (0, _jquery2['default'])('#firstName').val();
+      var lastName = (0, _jquery2['default'])('#lastName').val();
+      var phone = (0, _jquery2['default'])('#phone').val();
+      var email = (0, _jquery2['default'])('#email').val();
+
+      man.forEach(function (x) {
+        console.log(dude);
+        if (x.id = dude.id) {
+          (0, _jquery2['default'])('#save').on('click', function () {
+            var newFirst = (0, _jquery2['default'])('#addFirstName').val();
+            var newLast = (0, _jquery2['default'])('#addLastName').val();
+            var newPhone = Number((0, _jquery2['default'])('#addPhone').val());
+            var newEmail = (0, _jquery2['default'])('#addEmail').val();
+
+            x.firstName = newFirst;
+            x.lastName = newLast;
+            x.phone = newPhone;
+            x.email = newEmail;
+            console.log(x);
+            x.save();
+          });
+        }
+      });
     });
   },
   addPerson: function addPerson() {
@@ -232,7 +249,7 @@ var Router = _backbone2['default'].Router.extend({
       (0, _jquery2['default'])('.addPersonBox').remove();
       var router = _this2;
       router.navigate('/');
-      location.reload(true);
+      // location.reload(true);
     });
   },
 
@@ -276,8 +293,8 @@ var _backbone = require('backbone');
 
 var _backbone2 = _interopRequireDefault(_backbone);
 
-var editTemplate = function editTemplate(firstName, lastName, phone, email) {
-  return '<div>\n  <input type = \'text\' value=firstName id=\'addFirstName\'>\n  <input type = \'text\' value=lastName id=\'addLastName\'> \n  <input type = \'number\' value=phone id= \'addPhone\'>\n  <input type = \'email\' value = email id= \'addEmail\'>\n  // <input type = \'text\' value = \'image\' id = \'addPic\'>\n  <button id="save">Save</button>\n  </div>';
+var editTemplate = function editTemplate() {
+  return '<div>\n  <input type = \'text\'  id=\'addFirstName\'>\n  <input type = \'text\'  id=\'addLastName\'> \n  <input type = \'number\'  id= \'addPhone\'>\n  <input type = \'email\'  id= \'addEmail\'>\n  <button id="save">Save</button>\n  </div>';
 };
 exports['default'] = editTemplate;
 module.exports = exports['default'];

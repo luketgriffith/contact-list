@@ -1,12 +1,11 @@
 import backbone from 'backbone';
 
-let editTemplate =function(firstName, lastName, phone, email){
+let editTemplate =function(){
   return `<div>
-  <input type = 'text' value=firstName id='addFirstName'>
-  <input type = 'text' value=lastName id='addLastName'> 
-  <input type = 'number' value=phone id= 'addPhone'>
-  <input type = 'email' value = email id= 'addEmail'>
-  // <input type = 'text' value = 'image' id = 'addPic'>
+  <input type = 'text'  id='addFirstName'>
+  <input type = 'text'  id='addLastName'> 
+  <input type = 'number'  id= 'addPhone'>
+  <input type = 'email'  id= 'addEmail'>
   <button id="save">Save</button>
   </div>`;
 }

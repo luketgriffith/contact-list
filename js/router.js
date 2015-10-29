@@ -49,7 +49,7 @@ let Router = Backbone.Router.extend({
      
   },
 
-    showSpinner: function() {
+  showSpinner: function() {
     this.$el.html(
       '<i class="fa fa-spinner fa-spin"></i>'
     );
@@ -66,17 +66,39 @@ let Router = Backbone.Router.extend({
         router.$el.html( personTemplate(dude.toJSON()) );
       });
     }   
-     $('#edit').on('click', function(){
-      let editPerson = function(){
-      var firstName = $('#firstName').val();
-      var lastName = $('#lastName').val();
-      var phone = $('#phone').val();
-      var email = $('#email').val();
-      $('.app').append(editTemplate(firstName, lastName, phone, email));
-      };
+     $('#edit').on('click',()=>{
+        $('.app').append(editTemplate);
+          let dude = this.people.get(nameId);
+          let man = this.people;
+          
+          var firstName = $('#firstName').val();
+          var lastName = $('#lastName').val();
+          var phone = $('#phone').val();
+          var email = $('#email').val();
 
-      // var image= $('#image').val();
-      editPerson();
+          man.forEach(function(x){
+            console.log(dude);
+              if (x.id = dude.id){
+                $('#save').on('click', function(){
+                  let newFirst = $('#addFirstName').val();
+                  let newLast = $('#addLastName').val();
+                  let newPhone = Number($('#addPhone').val());
+                  let newEmail = $('#addEmail').val();
+
+                  x.firstName = newFirst;
+                  x.lastName = newLast;
+                  x.phone = newPhone;
+                  x.email = newEmail;
+                  console.log(x);
+                  x.save();
+                    })
+                  }
+                }) 
+          
+          
+
+
+      
      });  
     
   },
@@ -102,7 +124,7 @@ let Router = Backbone.Router.extend({
     $('.addPersonBox').remove();
     let router = this;
     router.navigate(`/`);
-    location.reload(true);
+    // location.reload(true);
     })
   },
 
